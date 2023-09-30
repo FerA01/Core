@@ -1,5 +1,6 @@
 package org.core.utilidades;
 
+import org.core.utilidades.util.Util;
 import org.junit.jupiter.api.Test;
 import java.util.Calendar;
 import java.util.Date;
@@ -72,5 +73,14 @@ class UtilTest {
         Date fechaPosterior = new Date(123, Calendar.OCTOBER, 1);    // 01/10/2023
         Date fechaAComparar = new Date(123, Calendar.SEPTEMBER, 30); // 30/09/2023
         assertTrue(Util.esFechaPosterior(fechaPosterior, fechaAComparar));
+    }
+    @Test
+    public void deberiaCambiarFechaPasadoPorParametro(){
+        String fechaEsperada = "30/09/2023";
+
+        Date fechaObtenida = Util.cambiarFecha(new Date(), 30, 9, 2023);
+        String fechaObtenidaAux = Util.getFechaFormato(fechaObtenida, "dd/MM/yyyy");
+
+        assertEquals(fechaEsperada, fechaObtenidaAux);
     }
 }

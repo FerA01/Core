@@ -1,10 +1,15 @@
-package org.core.utilidades;
+package org.core.utilidades.util;
+
+import org.core.utilidades.util.exception.NumeroFueraDeRangoException;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Util {
+    private static final Logger logger = Logger.getLogger(Util.class.getName());
 
     public static String getFechaFormato(Date date, String formato){
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
@@ -12,6 +17,25 @@ public class Util {
     }
     public static Date getFechaHoy(){
         return Calendar.getInstance().getTime();
+    }
+    public static Date cambiarFecha(Date date, int dia, int mes, int anio){
+        try {
+            EnRango rangoDia = new EnRango(1, 31);
+            EnRango rangoMes = new EnRango(1, 12);
+            EnRango rangoAnio = new EnRango(1900, 2999);
+
+            rangoDia.enRango(dia);
+            rangoMes.enRango(mes);
+            rangoAnio.enRango(anio);
+            date.setDate(dia);
+            date.setMonth(mes-1);
+            int anioAux = anio-1900;
+            date.setYear(anioAux);
+            return date;
+        }catch (NumeroFueraDeRangoException exception){
+            logger.log(Level.WARNING, exception.getMessage());
+        }
+        return date;
     }
     public static Date getPrimeraHora(Date date){
         return transformarTiempoPrimeraHora(date);
