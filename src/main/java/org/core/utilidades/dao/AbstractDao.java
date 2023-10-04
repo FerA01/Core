@@ -10,14 +10,14 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 public class AbstractDao<T>{
-    static Logger logger = Logger.getLogger(AbstractDao.class.getName());
+    private static final Logger logger = Logger.getLogger(AbstractDao.class.getName());
     EntityManagerFactory emf = Persistence.createEntityManagerFactory(getEntity().getClass().getName()+"Dao");
     EntityManager em = emf.createEntityManager();
     private T entity;
 
     public AbstractDao(){}
 
-    public List findAllBy(String query, Object params){
+    public List<T> findAllBy(String query, Object params){
         //ArrayList params =
 //        em.getTransaction();
 //        Query query1 = em.createQuery(query).setParameter(params);

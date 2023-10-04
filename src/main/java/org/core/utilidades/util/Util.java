@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Util {
+public class Util{
     private static final Logger logger = Logger.getLogger(Util.class.getName());
 
+
+    //FECHAS.
     public static String getFechaFormato(Date date, String formato){
         SimpleDateFormat sdf = new SimpleDateFormat(formato);
         return sdf.format(date);
@@ -66,4 +68,6 @@ public class Util {
     public static boolean esFechaPosterior(Date fechaPosterior, Date fecha){
         return fechaPosterior.after(fecha);
     }
+
+    //
 }
