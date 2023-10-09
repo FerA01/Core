@@ -1,10 +1,5 @@
 package org.core.utilidades.util.encoder;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.Test;
-
-import java.lang.management.ManagementFactory;
 import java.nio.charset.StandardCharsets;
 import static org.junit.jupiter.api.Assertions.*;
 class EncoderTest {
