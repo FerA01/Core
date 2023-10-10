@@ -1,6 +1,9 @@
 package org.core.utilidades.entity;
+import jakarta.persistence.*;
 import org.core.utilidades.util.Util;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,4 +20,16 @@ class PersonaTest {
         personaObtenida.setCuit(20123456781L);
         assertEquals(datosPersonaEsperado, personaObtenida.toString());
     }
+
+    @Test
+    public void deberiaComprobarExisteTablaPersonaBaseDatos(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence_core");
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Persona> query = em.createNamedQuery("Persona.findAll", Persona.class);
+        int cantidad = query.getResultList().size();
+        em.close();
+        emf.close();
+        assertEquals(0, cantidad);
+    }
+
 }

@@ -1,8 +1,9 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="persistence_core" transaction-type="RESOURCE_LOCAL">
-        <!--  Modelos a persistir       -->
+        <!--  Modelos a persistir  -->
         <class>org.core.utilidades.entity.Persona</class>
         <class>org.core.utilidades.entity.Organizacion</class>
+        <class>org.core.utilidades.entity.UsuarioPersona</class>
 
         <properties> <!-- Configuracion de la base de datos -->
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>

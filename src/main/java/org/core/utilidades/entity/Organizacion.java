@@ -1,7 +1,5 @@
 package org.core.utilidades.entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.core.utilidades.util.Util;
 import java.util.Date;
 import java.util.logging.Level;
@@ -11,6 +9,7 @@ public class Organizacion extends AbstractEntity {
     @Column(name = "razon_social")
     private String razonSocial;
     @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Column(name = "cuit")
     private Long cuit;
