@@ -1,11 +1,12 @@
 package org.core.utilidades.entity;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 @MappedSuperclass
 public class AbstractEntity implements Serializable{
     @Transient
-    protected final Logger logger = Logger.getLogger(AbstractEntity.class.getName());
+    protected final Logger logger = Logger.getLogger(getClass().getSimpleName());
     @Transient
     @PersistenceContext(unitName = "persistence_core")
     EntityManager entityManager;
@@ -15,9 +16,11 @@ public class AbstractEntity implements Serializable{
     @Column(name = "id")
     protected Long id;
 
-    public AbstractEntity(){}
+    public AbstractEntity(){
+        getLogger().log(Level.FINER, "Creando entidad " + this.getClass().getName());
+    }
 
-    public Logger getLogger() { return logger; }
+    protected Logger getLogger() { return logger; }
     public EntityManager getEntityManager() { return entityManager; }
     public void setEntityManager(EntityManager entityManager) { this.entityManager = entityManager; }
     public Long getId() { return id; }

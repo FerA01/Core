@@ -8,6 +8,8 @@ import java.util.logging.Level;
 @NamedQueries({
         @NamedQuery(name = "Persona.findById", query = "SELECT p FROM Persona p WHERE p.id =:id"),
         @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
+        @NamedQuery(name = "Persona.findByCuit", query = "SELECT p FROM Persona p WHERE p.cuit =:cuit"),
+        @NamedQuery(name = "Persona.findByDni", query = "SELECT p FROM Persona p WHERE p.dni =:dni"),
         @NamedQuery(name = "Persona.count", query = "SELECT COUNT(p.id) FROM Persona p"),
 })
 public class Persona extends AbstractEntity {
@@ -21,7 +23,6 @@ public class Persona extends AbstractEntity {
     private Long dni;
 
     @Column(name = "fecha_nacimiento")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaNacimiento;
 
     @Column(name = "cuit")
@@ -30,9 +31,7 @@ public class Persona extends AbstractEntity {
     @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UsuarioPersona usuario;
 
-    public Persona(){
-        getLogger().log(Level.INFO, "Creando entidad " + this.getClass().getName());
-    }
+    public Persona(){}
 
     @Override
     public String toString(){

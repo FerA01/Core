@@ -1,16 +1,10 @@
 package org.core.utilidades.entity;
 import jakarta.persistence.*;
+import org.core.utilidades.util.Util;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "usuario_persona")
-@NamedQueries({
-        @NamedQuery(name = "UsuarioPersona.findById", query = "SELECT up FROM UsuarioPersona up WHERE up.id =:id"),
-
-}
-)
-public class UsuarioPersona extends AbstractEntity {
+public class UsuarioOrganizacion extends AbstractEntity {
     @Column(name = "usuario")
     private String usuario;
 
@@ -25,36 +19,58 @@ public class UsuarioPersona extends AbstractEntity {
     private boolean logueado;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "persona_id")
-    private Persona persona;
+    @JoinColumn(name = "organizacion_id")
+    private Organizacion organizacion;
 
-    public UsuarioPersona() {}
+    public UsuarioOrganizacion() {}
 
+
+    @Override
+    public String toString() {
+        return "{ Usuario: " + getUsuario() +
+                " Fecha de alta " + Util.getFechaFormato(getFechaAlta(), "dd/MM/yyyy") +
+                " Logueado " + isLogueado() +
+                " \n Organización { " + getOrganizacion().toString() + " }" +
+                " \n }";
+    }
 
     public String getUsuario() {
         return usuario;
     }
+
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
+
     public String getContrasena() {
         return contrasena;
     }
+
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }
+
     public Date getFechaAlta() {
         return fechaAlta;
     }
+
     public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
     }
+
     public boolean isLogueado() {
         return logueado;
     }
+
     public void setLogueado(boolean logueado) {
         this.logueado = logueado;
     }
-    public Persona getPersona() { return persona; }
-    public void setPersona(Persona persona) { this.persona = persona; }
+
+    public Organizacion getOrganizacion() {
+        return organizacion;
+    }
+
+    public void setOrganizacion(Organizacion organizacion) {
+        this.organizacion = organizacion;
+    }
 }

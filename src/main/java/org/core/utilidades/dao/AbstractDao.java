@@ -1,5 +1,6 @@
 package org.core.utilidades.dao;
 import jakarta.persistence.EntityManager;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AbstractDao<T>{
@@ -16,6 +17,7 @@ public class AbstractDao<T>{
             entityManager.getTransaction().begin();
             entityManager.persist(entidad);
             entityManager.getTransaction().commit();
+            getLogger().log(Level.FINER, "Persistiendo " + entidad.getClass().getSimpleName());
             return entidad;
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {
@@ -23,6 +25,8 @@ public class AbstractDao<T>{
             }
             logger.severe("Error al guardar la entidad " + getClass().getName() + ": " +  e.getMessage());
             throw e;
+        }finally {
+            entityManager.close();
         }
     }
 
@@ -58,7 +62,5 @@ public class AbstractDao<T>{
     public T buscarPorId(Class<T> clase, Long id) {
         return entityManager.find(clase, id);
     }
-
-    // Más métodos comunes de DAO
     public Logger getLogger() { return logger; }
 }

@@ -2,21 +2,23 @@ package org.core.utilidades.entity;
 import jakarta.persistence.*;
 import org.core.utilidades.util.Util;
 import java.util.Date;
-import java.util.logging.Level;
 @Entity
 @Table(name = "organizacion")
+@NamedQueries({
+        @NamedQuery(name = "Organizacion.findById", query = "SELECT o FROM Organizacion o WHERE o.id =:id"),
+        @NamedQuery(name = "Organizacion.findAll", query = "SELECT o FROM Organizacion o"),
+        @NamedQuery(name = "Organizacion.findByCuit", query = "SELECT o FROM Organizacion o WHERE o.cuit =:cuit"),
+        @NamedQuery(name = "Organizacion.findByRazonSocial", query = "SELECT o FROM Organizacion o WHERE o.razon_social =:razonSocial"),
+})
 public class Organizacion extends AbstractEntity {
     @Column(name = "razon_social")
     private String razonSocial;
     @Column(name = "fecha_creacion")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Column(name = "cuit")
     private Long cuit;
 
-    public Organizacion(){
-        getLogger().log(Level.INFO, "Creando entidad " + this.getClass().getName());
-    }
+    public Organizacion(){}
 
     @Override
     public String toString(){

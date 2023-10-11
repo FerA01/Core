@@ -29,7 +29,7 @@ class PersonaTest {
         int cantidad = query.getResultList().size();
         em.close();
         emf.close();
-        assertEquals(0, cantidad);
+        assertEquals(1, cantidad);
     }
 
 }

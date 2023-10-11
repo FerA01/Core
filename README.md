@@ -14,7 +14,7 @@ B ----> C[Deploy]
 
 ## Caracteristicas
 
-#### Lenguaje de programación: JAVA 15
+#### Lenguaje de programación: JAVA 15 SE
 #### Test: Junit 5
 #### Base de datos: MySQL
 #### Gestor de proyecto: Maven
@@ -28,6 +28,10 @@ B ----> C[Deploy]
 - Commons-codec
 - Eclipselink
 
+## Autor
+
+[@FerA01](https://www.github.com/FerA01)
+
 ## Clases involucradas
 Como base, se tendra una clase abstracta para clases de reglas de negocio (Business), servicios (Dao) y entidades (Entities).
 Habra una clase util en el cual tendra diferentes métodos puedan ser usados por varias clases.
@@ -37,9 +41,19 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 ### Business
 
 ### Dao
-
+* AbstractDao (src/main/java/org/core/utilidades/dao/AbstractDao.java)
+* PersonaDao
 ### Entity
 
+* AbstractEntity 
+* Organizacion
+* Persona
+* UsuarioOrganizacion
+* UsuarioPersona
+
 ### Util
+
+![Modelo Base de Datos](C:%5CUsers%5CUsuario%5CDesktop%5Cmodelo.png)
+
 
 
