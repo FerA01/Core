@@ -4,6 +4,8 @@ import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Persona;
 import org.core.utilidades.entity.Titular;
 
+import java.util.List;
+
 public class PersonaDao extends AbstractDao<Persona> implements Titular {
     public PersonaDao(){
         super();
@@ -21,6 +23,12 @@ public class PersonaDao extends AbstractDao<Persona> implements Titular {
         TypedQuery<Persona> query = entityManager.createNamedQuery("Persona.findByDni", Persona.class);
         query.setParameter("dni", dni);
         return query.getSingleResult();
+    }
+
+
+
+    public List<Persona> obtenerTodo(){
+        return super.obtenerTodo(Persona.class);
     }
 
     @Override

@@ -8,7 +8,7 @@ import java.util.Date;
         @NamedQuery(name = "Organizacion.findById", query = "SELECT o FROM Organizacion o WHERE o.id =:id"),
         @NamedQuery(name = "Organizacion.findAll", query = "SELECT o FROM Organizacion o"),
         @NamedQuery(name = "Organizacion.findByCuit", query = "SELECT o FROM Organizacion o WHERE o.cuit =:cuit"),
-        @NamedQuery(name = "Organizacion.findByRazonSocial", query = "SELECT o FROM Organizacion o WHERE o.razon_social =:razonSocial"),
+        @NamedQuery(name = "Organizacion.findByRazonSocial", query = "SELECT o FROM Organizacion o WHERE o.razonSocial =:razonSocial"),
 })
 public class Organizacion extends AbstractEntity {
     @Column(name = "razon_social")

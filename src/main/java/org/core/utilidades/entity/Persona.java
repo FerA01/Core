@@ -2,7 +2,6 @@ package org.core.utilidades.entity;
 import jakarta.persistence.*;
 import org.core.utilidades.util.Util;
 import java.util.Date;
-import java.util.logging.Level;
 @Entity
 @Table(name = "persona")
 @NamedQueries({

@@ -3,6 +3,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Organizacion;
 import org.core.utilidades.entity.Titular;
+import java.util.List;
 
 public class OrganizacionDao extends AbstractDao<Organizacion> implements Titular {
 
@@ -20,5 +21,14 @@ public class OrganizacionDao extends AbstractDao<Organizacion> implements Titula
 
     public Organizacion buscarPorId(Long id){
         return super.buscarPorId(Organizacion.class, id);
+    }
+
+    public Organizacion  buscarPorRazonSocial(String razonSocial){
+        TypedQuery<Organizacion> query = entityManager.createNamedQuery("Organizacion.findByRazonSocial", Organizacion.class);
+        query.setParameter("razonSocial", razonSocial);
+        return query.getSingleResult();
+    }
+    public List<Organizacion> obtenerTodo(){
+        return super.obtenerTodo(Organizacion.class);
     }
 }

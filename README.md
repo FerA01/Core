@@ -45,7 +45,7 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 * PersonaDao
 ### Entity
 
-* AbstractEntity 
+* AbstractEntity
 * Organizacion
 * Persona
 * UsuarioOrganizacion
@@ -53,7 +53,7 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 
 ### Util
 
-![Modelo Base de Datos](C:%5CUsers%5CUsuario%5CDesktop%5Cmodelo.png)
+![Modelo Base de Datos](src/main/resources/static/modelo.png)
 
 
 

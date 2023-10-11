@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -43,6 +44,11 @@ class PersonaDaoTest {
         Persona personaObtenida = getPersonaDao().obtenerTitularCuit(persona.getCuit());
 
         assertEquals(persona.toString(), personaObtenida.toString());
+    }
+    @Test
+    public void deberiaObtenerListaPersona(){
+        List<Persona> personas = getPersonaDao().obtenerTodo();
+        assertTrue(personas != null && !personas.isEmpty());
     }
 
     @Test

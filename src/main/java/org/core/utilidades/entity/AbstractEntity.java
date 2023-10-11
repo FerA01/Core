@@ -7,9 +7,9 @@ import java.util.logging.Logger;
 public class AbstractEntity implements Serializable{
     @Transient
     protected final Logger logger = Logger.getLogger(getClass().getSimpleName());
-    @Transient
-    @PersistenceContext(unitName = "persistence_core")
-    EntityManager entityManager;
+//    @Transient
+//    @PersistenceContext(unitName = "persistence_core")
+//    EntityManager entityManager;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -21,8 +21,6 @@ public class AbstractEntity implements Serializable{
     }
 
     protected Logger getLogger() { return logger; }
-    public EntityManager getEntityManager() { return entityManager; }
-    public void setEntityManager(EntityManager entityManager) { this.entityManager = entityManager; }
     public Long getId() { return id; }
     private void setId(Long id) { this.id = id; }
 }

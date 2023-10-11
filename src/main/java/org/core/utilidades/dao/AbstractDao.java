@@ -1,5 +1,6 @@
 package org.core.utilidades.dao;
 import jakarta.persistence.EntityManager;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,7 +42,7 @@ public class AbstractDao<T>{
                 entityManager.getTransaction().rollback();
             }
             logger.severe("Error al actualizar la entidad " + getClass().getName() + ": " +  e.getMessage());
-            throw e;
+            return null;
         }
     }
 
@@ -61,6 +62,10 @@ public class AbstractDao<T>{
 
     public T buscarPorId(Class<T> clase, Long id) {
         return entityManager.find(clase, id);
+    }
+
+    public List<T> obtenerTodo(Class<T> clase){
+        return entityManager.createNamedQuery(clase.getSimpleName()+".findAll").getResultList();
     }
     public Logger getLogger() { return logger; }
 }
