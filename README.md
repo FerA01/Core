@@ -53,7 +53,7 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 
 ### Util
 
-![Modelo Base de Datos](src/main/resources/static/modelo.png)
+![Modelo Base de Datos](https://github.com/FerA01/Core/blob/7983f91b96354de14cd03480d55d41db4db27878/src/main/resources/static/modelo.png)
 
 
 
