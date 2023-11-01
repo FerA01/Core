@@ -25,10 +25,10 @@ public class AbstractDao<T>{
                 entityManager.getTransaction().rollback();
             }
             logger.severe("Error al guardar la entidad " + getClass().getName() + ": " +  e.getMessage());
-            throw e;
         }finally {
             entityManager.close();
         }
+        return null;
     }
 
     public T actualizar(T entidad) {

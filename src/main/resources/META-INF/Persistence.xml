@@ -8,8 +8,8 @@
         <properties> <!-- Configuracion de la base de datos -->
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/cuenta_bancaria"/>
-            <property name="eclipselink.jdbc.user" value="USUARIO_BD"/>
-            <property name="eclipselink.jdbc.password" value="CLAVE_BD"/>
+            <property name="eclipselink.jdbc.user" value="root"/>
+            <property name="eclipselink.jdbc.password" value="universidad2023"/>
             <property name="eclipselink.logging.level" value="WARNING"/>
         </properties>
     </persistence-unit>

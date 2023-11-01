@@ -25,8 +25,6 @@ public class PersonaDao extends AbstractDao<Persona> implements Titular {
         return query.getSingleResult();
     }
 
-
-
     public List<Persona> obtenerTodo(){
         return super.obtenerTodo(Persona.class);
     }

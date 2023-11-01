@@ -4,7 +4,6 @@ import org.core.utilidades.entity.Persona;
 import org.core.utilidades.util.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.Date;
 import java.util.List;
 

@@ -7,6 +7,9 @@ import java.util.Date;
 @Table(name = "usuario_persona")
 @NamedQueries({
         @NamedQuery(name = "UsuarioPersona.findById", query = "SELECT up FROM UsuarioPersona up WHERE up.id =:id"),
+        @NamedQuery(name = "UsuarioPersona.findAll", query = "SELECT up FROM UsuarioPersona up"),
+        @NamedQuery(name = "UsuarioPersona.findByPersona", query = "SELECT up FROM UsuarioPersona up WHERE up.persona =:persona"),
+        @NamedQuery(name = "UsuarioPersona.findByUsuario", query = "SELECT up FROM UsuarioPersona up WHERE up.usuario =:usuario"),
 
 }
 )
