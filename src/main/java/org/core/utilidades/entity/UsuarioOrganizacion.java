@@ -3,7 +3,15 @@ import jakarta.persistence.*;
 import org.core.utilidades.util.Util;
 
 import java.util.Date;
-
+@Entity
+@Table(name = "usuario_organizacion")
+@NamedQueries({
+        @NamedQuery(name = "UsuarioOrganizacion.findById", query = "SELECT uo FROM UsuarioOrganizacion AS uo WHERE uo.id =:id"),
+        @NamedQuery(name = "UsuarioOrganizacion.findByUsuario", query = "SELECT uo FROM UsuarioOrganizacion AS uo WHERE uo.usuario =:usuario"),
+        @NamedQuery(name = "UsuarioOrganizacion.findAll", query = "SELECT uo FROM UsuarioOrganizacion AS uo"),
+        @NamedQuery(name = "UsuarioOrganizacion.findByCuit", query = "SELECT uo FROM UsuarioOrganizacion AS uo WHERE uo.organizacion.cuit =:cuit"),
+        @NamedQuery(name = "UsuarioOrganizacion.findByOrganizacion", query = "SELECT uo FROM UsuarioOrganizacion AS uo WHERE uo.organizacion =:organizacion"),
+})
 public class UsuarioOrganizacion extends AbstractEntity {
     @Column(name = "usuario")
     private String usuario;
@@ -18,7 +26,7 @@ public class UsuarioOrganizacion extends AbstractEntity {
     @Column(name = "logueado")
     private boolean logueado;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "organizacion_id")
     private Organizacion organizacion;
 
