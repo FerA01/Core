@@ -1,11 +1,11 @@
 package org.core.utilidades.dao;
-
 import org.core.utilidades.dependencia.UsuarioOrganizacionDependencia;
 import org.core.utilidades.entity.Organizacion;
 import org.core.utilidades.entity.UsuarioOrganizacion;
 import org.core.utilidades.util.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,6 +32,22 @@ class UsuarioOrganizacionDaoTest {
         Organizacion persiste =  organizacionDao.guardar(organizacion);
 
         assertNotNull(persiste);
+    }
+
+    @Test
+    public void deberiaObtenerOrganizacionPorId(){
+        Organizacion organizacion = organizacionDao.buscarPorId(1L);
+        assertNotNull(organizacion);
+//        UsuarioOrganizacion uo = new UsuarioOrganizacion();
+//        uo.setUsuario("ficticiaSA");
+//        uo.setContrasena("1234");
+//        uo.setLogueado(false);
+//        uo.setFechaAlta(new Date());
+//        uo.setOrganizacion(organizacion);
+//          uod.guardar(uo);
+
+        UsuarioOrganizacion uoCreado = uod.buscarPorUsuario("ficticiaSA");
+        assertNotNull(uoCreado);
     }
 
     @Test

@@ -27,9 +27,6 @@ public class Persona extends AbstractEntity {
     @Column(name = "cuit")
     private Long cuit;
 
-    @OneToOne(mappedBy = "persona", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private UsuarioPersona usuario;
-
     public Persona(){}
 
     @Override
@@ -63,6 +60,4 @@ public class Persona extends AbstractEntity {
     }
     public Long getCuit() { return cuit; }
     public void setCuit(Long cuit) { this.cuit = cuit; }
-    public UsuarioPersona getUsuario() { return usuario; }
-    public void setUsuario(UsuarioPersona usuario) { this.usuario = usuario; }
 }

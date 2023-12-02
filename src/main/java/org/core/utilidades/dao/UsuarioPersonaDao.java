@@ -3,11 +3,12 @@ package org.core.utilidades.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Persona;
+import org.core.utilidades.entity.Usuario;
 import org.core.utilidades.entity.UsuarioPersona;
 
 import java.util.List;
 
-public class UsuarioPersonaDao extends AbstractDao<UsuarioPersona>{
+public class UsuarioPersonaDao extends AbstractDao<UsuarioPersona> implements Usuario {
     public UsuarioPersonaDao(){ super(); }
     public UsuarioPersonaDao(EntityManager em){ super(em); }
 

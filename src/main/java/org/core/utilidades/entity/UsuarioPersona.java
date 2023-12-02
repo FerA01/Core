@@ -27,7 +27,7 @@ public class UsuarioPersona extends AbstractEntity {
     @Column(name = "logueado")
     private boolean logueado;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "persona_id")
     private Persona persona;
 
