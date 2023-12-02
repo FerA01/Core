@@ -1,11 +1,22 @@
 package org.core.utilidades.entity;
-
+import org.core.utilidades.dao.OrganizacionDao;
+import org.core.utilidades.dependencia.OrganizacionDependencia;
 import org.core.utilidades.util.Util;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class OrganizacionTest {
+    private OrganizacionDao organizacionDao;
+    private OrganizacionDependencia od;
+
+    @BeforeEach
+    @Test
+    public void iniciarDao(){
+        setOd(OrganizacionDependencia.getInstance());
+        setOrganizacionDao(getOd().getOrganizacionDao());
+    }
+
 
     @Test
     public void deberiaDevolverDatosOrganizacion(){
@@ -20,4 +31,17 @@ class OrganizacionTest {
         assertEquals(datoEsperado, datoObtenido);
     }
 
+    @Test
+    public void deberiaActualizarDatosOrganizacionRazonSocial(){
+        String datoEsperado = "Mercedes SA";
+        Organizacion organizacion = getOrganizacionDao().buscarPorId(1L);
+        organizacion.setRazonSocial("Mercedes SA");
+        getOrganizacionDao().actualizar(organizacion);
+        assertEquals(datoEsperado, organizacion.getRazonSocial());
+    }
+
+    public OrganizacionDao getOrganizacionDao() { return organizacionDao; }
+    public void setOrganizacionDao(OrganizacionDao organizacionDao) { this.organizacionDao = organizacionDao; }
+    public OrganizacionDependencia getOd() { return od; }
+    public void setOd(OrganizacionDependencia od) { this.od = od; }
 }

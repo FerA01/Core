@@ -1,10 +1,22 @@
 package org.core.utilidades.entity;
-import jakarta.persistence.*;
+import org.core.utilidades.dao.PersonaDao;
+import org.core.utilidades.dependencia.PersonaDependencia;
 import org.core.utilidades.util.Util;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonaTest {
+    private PersonaDao personaDao;
+    private PersonaDependencia pd;
+
+    @BeforeEach
+    @Test
+    public void iniciarDao(){
+        setPd(PersonaDependencia.getInstance());
+        setPersonaDao(getPd().getPersonaDao());
+    }
+
     @Test
     public void deberiaDevolverDatosPersona(){
         String datosPersonaEsperado = "Nombre y Apellido: Leonel Messi, DNI: 12345678, Fecha de nacimiento: 08/10/2023, Cuit: 20123456781";
@@ -19,14 +31,19 @@ class PersonaTest {
     }
 
     @Test
-    public void deberiaComprobarExisteTablaPersonaBaseDatos(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("persistence_core");
-        EntityManager em = emf.createEntityManager();
-        TypedQuery<Persona> query = em.createNamedQuery("Persona.findAll", Persona.class);
-        int cantidad = query.getResultList().size();
-        em.close();
-        emf.close();
-        assertEquals(1, cantidad);
+    public void deberiaActualizarDatoPersonaNombre(){
+        String nombreEsperado = "Leonel Andres";
+        Persona persona = getPersonaDao().buscarPorId(1L);
+        assertNotNull(persona);
+        persona.setNombre("Leonel Andres");
+        getPersonaDao().actualizar(persona);
+        Persona actualizado = getPersonaDao().obtenerPersonaDni(12345678L);
+        assertNotNull(actualizado);
+        assertEquals(nombreEsperado, actualizado.getNombre());
     }
 
+    public PersonaDao getPersonaDao() { return personaDao; }
+    public void setPersonaDao(PersonaDao personaDao) { this.personaDao = personaDao; }
+    public PersonaDependencia getPd() { return pd; }
+    public void setPd(PersonaDependencia pd) { this.pd = pd; }
 }

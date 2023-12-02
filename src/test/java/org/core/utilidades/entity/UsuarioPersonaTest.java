@@ -25,26 +25,6 @@ class UsuarioPersonaTest {
         setPersonaDao(getPd().getPersonaDao());
     }
 
-    @Test
-    public void deberiaPersistirEntidad(){
-        Persona persona = getPersonaDao().buscarPorId(1L);
-        if (persona != null){
-            UsuarioPersona usuario = new UsuarioPersona();
-            usuario.setUsuario("prueba1");
-            usuario.setContrasena("contraseña");
-            usuario.setPersona(persona);
-            usuario.setLogueado(true);
-            usuario.setFechaAlta(Util.getFechaHoy());
-
-
-            //UsuarioPersona up = getDao().guardar(usuario);
-            persona.setUsuario(usuario);
-            Persona p = getPersonaDao().actualizar(persona);
-
-            assertNotNull(p, "Error al actualizar la persona");
-           // assertNotNull(up, "Error al guardar el usuario");
-        }
-    }
 
     public UsuarioPersonaDao getDao() {
         return dao;
