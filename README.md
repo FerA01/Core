@@ -43,6 +43,9 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 ### Dao
 * AbstractDao (src/main/java/org/core/utilidades/dao/AbstractDao.java)
 * PersonaDao
+* OrganizacionDao
+* UsuarioPersonaDao
+* UsuarioOrganizacionDao
 ### Entity
 
 * AbstractEntity
@@ -50,6 +53,9 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 * Persona
 * UsuarioOrganizacion
 * UsuarioPersona
+  #### Interface
+  * Titular
+  * Usuario
 
 ### Util
 

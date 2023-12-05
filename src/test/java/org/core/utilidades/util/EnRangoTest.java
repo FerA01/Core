@@ -1,8 +1,6 @@
 package org.core.utilidades.util;
-
 import org.core.utilidades.util.exception.NumeroFueraDeRangoException;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class EnRangoTest {
