@@ -1,9 +1,12 @@
 package org.core.utilidades.dao;
+import jakarta.persistence.EntityExistsException;
 import org.core.utilidades.dependencia.PersonaDependencia;
 import org.core.utilidades.entity.Persona;
 import org.core.utilidades.util.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
+
 import java.util.Date;
 import java.util.List;
 
@@ -39,9 +42,13 @@ class PersonaDaoTest {
     }
 
     @Test
-    public void deberiaEliminarPersonaIdDos(){
-        Persona persona = getPersonaDao().buscarPorId(2L);
-        assertNull(persona);
+    public void deberiaVerificarExistenciaEntidadAntesPersistir(){
+        Long cuit = 30123456789L;
+
+        Persona persona = getPersonaDao().obtenerTitularCuit(cuit);
+
+        assertNotNull(persona);
+        getPersonaDao().guardar(persona);
     }
 
     public PersonaDao getPersonaDao() { return personaDao; }

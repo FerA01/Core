@@ -14,18 +14,26 @@ public class AbstractDao<T>{
     }
 
     protected void beforeCreate(){}
+    protected void beforeCreate(T entity){}
     protected void afterCreate(){}
+    protected void afterCreate(T entity){}
     protected void beforeUpdate(){}
+    protected void beforeUpdate(T entity){}
     protected void afterUpdate(){}
+    protected void afterUpdate(T entity){}
     protected void beforeDelete(){}
+    protected void beforeDelete(T entity){}
     protected void afterDelete(){}
+    protected void afterDelete(T entity){}
 
     public T guardar(T entidad) {
         try {
             entityManager.getTransaction().begin();
             beforeCreate();
+            beforeCreate(entidad);
             entityManager.persist(entidad);
             afterCreate();
+            afterCreate(entidad);
             entityManager.getTransaction().commit();
             getLogger().log(Level.FINER, "Persistiendo " + entidad.getClass().getSimpleName());
             return entidad;
@@ -44,8 +52,10 @@ public class AbstractDao<T>{
         try {
             entityManager.getTransaction().begin();
             beforeUpdate();
+            beforeUpdate(entidad);
             entidad = entityManager.merge(entidad);
             afterUpdate();
+            afterUpdate(entidad);
             entityManager.getTransaction().commit();
             return entidad;
         } catch (Exception e) {
@@ -61,8 +71,10 @@ public class AbstractDao<T>{
         try {
             entityManager.getTransaction().begin();
             beforeDelete();
+            beforeDelete(entidad);
             entityManager.remove(entidad);
             afterDelete();
+            afterDelete(entidad);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (entityManager.getTransaction().isActive()) {

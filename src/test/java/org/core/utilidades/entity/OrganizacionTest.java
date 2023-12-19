@@ -1,4 +1,5 @@
 package org.core.utilidades.entity;
+import jakarta.persistence.EntityExistsException;
 import org.core.utilidades.dao.OrganizacionDao;
 import org.core.utilidades.dependencia.OrganizacionDependencia;
 import org.core.utilidades.util.Util;
@@ -38,6 +39,13 @@ class OrganizacionTest {
         organizacion.setRazonSocial("Mercedes SA");
         getOrganizacionDao().actualizar(organizacion);
         assertEquals(datoEsperado, organizacion.getRazonSocial());
+    }
+
+    @Test
+    public void deberiaVerificarExistenciaEntidadAntesPersistir(){
+        Organizacion organizacion = getOrganizacionDao().buscarPorId(1L);
+
+        getOrganizacionDao().guardar(organizacion);
     }
 
     public OrganizacionDao getOrganizacionDao() { return organizacionDao; }

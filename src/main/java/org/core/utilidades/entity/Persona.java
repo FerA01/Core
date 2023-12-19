@@ -9,6 +9,7 @@ import java.util.Date;
         @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
         @NamedQuery(name = "Persona.findByCuit", query = "SELECT p FROM Persona p WHERE p.cuit =:cuit"),
         @NamedQuery(name = "Persona.findByDni", query = "SELECT p FROM Persona p WHERE p.dni =:dni"),
+        @NamedQuery(name = "Persona.findByCuitOrDni", query = "SELECT p FROM Persona p WHERE p.dni =:dni OR p.cuit =:cuit"),
         @NamedQuery(name = "Persona.count", query = "SELECT COUNT(p.id) FROM Persona p"),
 })
 public class Persona extends AbstractEntity {
