@@ -1,14 +1,11 @@
 package org.core.utilidades.entity;
-
 import org.core.utilidades.dao.OrganizacionDao;
 import org.core.utilidades.dao.UsuarioOrganizacionDao;
 import org.core.utilidades.dependencia.OrganizacionDependencia;
 import org.core.utilidades.dependencia.UsuarioOrganizacionDependencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UsuarioOrganizacionTest {
     private UsuarioOrganizacionDao dao;
@@ -50,6 +47,12 @@ public class UsuarioOrganizacionTest {
         assertEquals("12345", usuario.getContrasena());
     }
 
+    @Test
+    public void deberiaFallarPersistirEntidadExistente(){
+        UsuarioOrganizacion usuario = getDao().buscarPorId(1L);
+        UsuarioOrganizacion entidadCreada = getDao().guardar(usuario);
+        assertNull(entidadCreada);
+    }
 
     public UsuarioOrganizacionDao getDao() {
         return dao;

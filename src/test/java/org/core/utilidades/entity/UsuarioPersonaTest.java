@@ -5,8 +5,8 @@ import org.core.utilidades.dependencia.PersonaDependencia;
 import org.core.utilidades.dependencia.UsuarioPersonaDependencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class UsuarioPersonaTest {
     private UsuarioPersonaDao dao;
@@ -45,6 +45,13 @@ class UsuarioPersonaTest {
         usuario.setContrasena("1234");
         getDao().actualizar(usuario);
         assertEquals("1234", usuario.getContrasena());
+    }
+
+    @Test
+    public void deberiaFallarPersistirEntidadExistente(){
+        UsuarioPersona usuario = getDao().buscarPorId(1L);
+        UsuarioPersona entidadCreada = getDao().guardar(usuario);
+        assertNull(entidadCreada);
     }
 
 

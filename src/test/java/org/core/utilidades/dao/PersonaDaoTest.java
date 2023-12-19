@@ -1,15 +1,9 @@
 package org.core.utilidades.dao;
-import jakarta.persistence.EntityExistsException;
 import org.core.utilidades.dependencia.PersonaDependencia;
 import org.core.utilidades.entity.Persona;
-import org.core.utilidades.util.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
-
-import java.util.Date;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PersonaDaoTest {
@@ -42,13 +36,14 @@ class PersonaDaoTest {
     }
 
     @Test
-    public void deberiaVerificarExistenciaEntidadAntesPersistir(){
+    public void deberiaFallarPersistirEntidadExistente(){
         Long cuit = 30123456789L;
 
         Persona persona = getPersonaDao().obtenerTitularCuit(cuit);
 
         assertNotNull(persona);
-        getPersonaDao().guardar(persona);
+        Persona esperado = getPersonaDao().guardar(persona);
+        assertNull(esperado);
     }
 
     public PersonaDao getPersonaDao() { return personaDao; }

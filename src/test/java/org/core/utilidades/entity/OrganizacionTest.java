@@ -42,10 +42,11 @@ class OrganizacionTest {
     }
 
     @Test
-    public void deberiaVerificarExistenciaEntidadAntesPersistir(){
+    public void deberiaFallarPersistirEntidadExistente(){
         Organizacion organizacion = getOrganizacionDao().buscarPorId(1L);
 
-        getOrganizacionDao().guardar(organizacion);
+        Organizacion obtenido =  getOrganizacionDao().guardar(organizacion);
+        assertNull(obtenido);
     }
 
     public OrganizacionDao getOrganizacionDao() { return organizacionDao; }

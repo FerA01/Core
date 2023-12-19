@@ -42,6 +42,13 @@ class PersonaTest {
         assertEquals(nombreEsperado, actualizado.getNombre());
     }
 
+    @Test
+    public void deberiaFallarPersistirEntidadExistente() {
+        Persona persona = getPersonaDao().buscarPorId(1L);
+        Persona obtenido = getPersonaDao().guardar(persona);
+        assertNull(obtenido);
+    }
+
     public PersonaDao getPersonaDao() { return personaDao; }
     public void setPersonaDao(PersonaDao personaDao) { this.personaDao = personaDao; }
     public PersonaDependencia getPd() { return pd; }

@@ -1,5 +1,6 @@
 package org.core.utilidades.dao;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Persona;
@@ -29,4 +30,11 @@ public class UsuarioPersonaDao extends AbstractDao<UsuarioPersona> implements Us
         return query.getSingleResult();
     }
 
+    @Override
+    protected void beforeCreate(UsuarioPersona entity) {
+        UsuarioPersona usuario = buscarPorPersona(entity.getPersona());
+        if (usuario != null){
+            throw new EntityExistsException("Entidad ya creada");
+        }
+    }
 }

@@ -1,4 +1,5 @@
 package org.core.utilidades.dao;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Organizacion;
@@ -9,12 +10,6 @@ import org.core.utilidades.entity.UsuarioPersona;
 public class UsuarioOrganizacionDao extends AbstractDao<UsuarioOrganizacion> implements Usuario {
     public UsuarioOrganizacionDao(){super();}
     public UsuarioOrganizacionDao(EntityManager em){ super(em);}
-
-    //Antes de crear el usuario organización debo asegurar que exista la organización.
-    public void beforeCreate(){
-
-    }
-
 
     public UsuarioOrganizacion buscarPorId(Long id) {
         return super.buscarPorId(UsuarioOrganizacion.class, id);
@@ -35,5 +30,14 @@ public class UsuarioOrganizacionDao extends AbstractDao<UsuarioOrganizacion> imp
         TypedQuery<UsuarioOrganizacion> query = entityManager.createNamedQuery("UsuarioOrganizacion.findByOrganizacion", UsuarioOrganizacion.class);
         query.setParameter("organizacion", organizacion);
         return query.getSingleResult();
+    }
+
+    @Override
+    protected void beforeCreate(UsuarioOrganizacion entity) {
+        UsuarioOrganizacion usuario = obtenerPorOrganizacion(entity.getOrganizacion());
+        if (usuario != null){
+            throw new EntityExistsException("Entidad ya creada");
+        }
+        super.beforeCreate(entity);
     }
 }

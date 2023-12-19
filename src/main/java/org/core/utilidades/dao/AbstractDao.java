@@ -41,7 +41,7 @@ public class AbstractDao<T>{
             if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
-            logger.severe("Error al guardar la entidad " + getClass().getName() + ": " +  e.getMessage());
+            logger.severe("Error al persistir entidad " + entidad.getClass().getSimpleName() + ": " +  e.getMessage());
         }finally {
             entityManager.close();
         }

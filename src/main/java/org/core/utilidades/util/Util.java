@@ -68,6 +68,4 @@ public class Util{
     public static boolean esFechaPosterior(Date fechaPosterior, Date fecha){
         return fechaPosterior.after(fecha);
     }
-
-    //
 }
