@@ -83,4 +83,11 @@ class UtilTest {
 
         assertEquals(fechaEsperada, fechaObtenidaAux);
     }
+
+    @Test
+    public void deberiaDevolverFechaFormatoDDMMYYYYHHMMSS(){
+        Date fecha = Util.getFechaHoy();
+        String fechaAString = Util.getFechaFormato(fecha, "dd/MM/yyyy HH:mm:ss");
+        System.out.println(fechaAString);
+    }
 }

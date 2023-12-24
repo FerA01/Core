@@ -2,6 +2,7 @@ package org.core.utilidades.entity;
 import jakarta.persistence.*;
 import org.core.utilidades.util.Util;
 import java.util.Date;
+import java.util.Objects;
 @Entity
 @Table(name = "organizacion")
 @NamedQueries({
@@ -19,6 +20,16 @@ public class Organizacion extends AbstractEntity {
     private Long cuit;
 
     public Organizacion(){}
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Organizacion otro = (Organizacion) o;
+
+        return Objects.equals(this.getId(), otro.getId());
+    }
 
     @Override
     public String toString(){

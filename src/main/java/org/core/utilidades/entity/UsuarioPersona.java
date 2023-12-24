@@ -1,6 +1,8 @@
 package org.core.utilidades.entity;
 import jakarta.persistence.*;
+import org.core.utilidades.util.Util;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "usuario_persona")
@@ -31,6 +33,25 @@ public class UsuarioPersona extends AbstractEntity {
     private Persona persona;
 
     public UsuarioPersona() {}
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UsuarioPersona otro = (UsuarioPersona) o;
+
+        return Objects.equals(this.getId(), otro.getId());
+    }
+
+    @Override
+    public String toString() {
+        return "{ Usuario: " + getUsuario() +
+                " Fecha de alta " + Util.getFechaFormato(getFechaAlta(), "dd/MM/yyyy") +
+                " Logueado " + isLogueado() +
+                " \n Persona { " + getPersona().toString() + " }" +
+                " \n }";
+    }
 
 
     public String getUsuario() {

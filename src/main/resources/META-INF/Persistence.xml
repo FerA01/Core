@@ -5,6 +5,8 @@
         <class>org.core.utilidades.entity.Organizacion</class>
         <class>org.core.utilidades.entity.UsuarioPersona</class>
         <class>org.core.utilidades.entity.UsuarioOrganizacion</class>
+        <class>org.core.utilidades.entity.cuentabancaria.TipoTransaccion</class>
+        <class>org.core.utilidades.entity.cuentabancaria.Movimiento</class>
 
         <properties> <!-- Configuracion de la base de datos -->
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>

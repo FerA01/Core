@@ -2,6 +2,8 @@ package org.core.utilidades.entity;
 import jakarta.persistence.*;
 import org.core.utilidades.util.Util;
 import java.util.Date;
+import java.util.Objects;
+
 @Entity
 @Table(name = "persona")
 @NamedQueries({
@@ -30,6 +32,15 @@ public class Persona extends AbstractEntity {
 
     public Persona(){}
 
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Persona otro = (Persona) o;
+
+        return Objects.equals(this.getId(), otro.getId());
+    }
     @Override
     public String toString(){
         return "Nombre y Apellido: " +  getNombre() + " " + getApellido() + ", DNI: " + getDni() + ", Fecha de nacimiento: " + Util.getFechaFormato(getFechaNacimiento(), "dd/MM/yyyy") + ", Cuit: " + getCuit();

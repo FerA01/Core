@@ -1,8 +1,9 @@
 package org.core.utilidades.entity;
 import jakarta.persistence.*;
 import org.core.utilidades.util.Util;
-
 import java.util.Date;
+import java.util.Objects;
+
 @Entity
 @Table(name = "usuario_organizacion")
 @NamedQueries({
@@ -29,6 +30,16 @@ public class UsuarioOrganizacion extends AbstractEntity {
     @OneToOne
     @JoinColumn(name = "organizacion_id", unique = true)
     private Organizacion organizacion;
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UsuarioOrganizacion otro = (UsuarioOrganizacion) o;
+
+        return Objects.equals(this.getId(), otro.getId());
+    }
 
     public UsuarioOrganizacion() {}
 
