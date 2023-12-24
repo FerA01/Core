@@ -1,5 +1,7 @@
 package org.core.utilidades.dao;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceException;
+
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +28,7 @@ public class AbstractDao<T>{
     protected void afterDelete(){}
     protected void afterDelete(T entity){}
 
-    public T guardar(T entidad) {
+    public T guardar(T entidad) throws PersistenceException {
         try {
             entityManager.getTransaction().begin();
             beforeCreate();

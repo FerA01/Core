@@ -1,6 +1,5 @@
 package org.core.utilidades.entity;
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity
@@ -28,7 +27,7 @@ public class UsuarioPersona extends AbstractEntity {
     private boolean logueado;
 
     @OneToOne
-    @JoinColumn(name = "persona_id")
+    @JoinColumn(name = "persona_id", unique = true)
     private Persona persona;
 
     public UsuarioPersona() {}

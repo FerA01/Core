@@ -27,7 +27,7 @@ public class UsuarioOrganizacion extends AbstractEntity {
     private boolean logueado;
 
     @OneToOne
-    @JoinColumn(name = "organizacion_id")
+    @JoinColumn(name = "organizacion_id", unique = true)
     private Organizacion organizacion;
 
     public UsuarioOrganizacion() {}
