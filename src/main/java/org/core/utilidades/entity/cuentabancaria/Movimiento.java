@@ -8,6 +8,13 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "movimiento")
+@NamedQueries({
+        @NamedQuery(name="Movimiento.findById", query = "SELECT m FROM Movimiento m WHERE m.id =:id"),
+        @NamedQuery(name="Movimiento.findByCuentaOrigen", query = "SELECT m FROM Movimiento m WHERE m.cuentaOrigen =:cuentaOrigen"),
+        @NamedQuery(name="Movimiento.findByCuentaDestino", query = "SELECT m FROM Movimiento m WHERE m.cuentaDestino =:cuentaDestino"),
+        @NamedQuery(name="Movimiento.findByTipo", query = "SELECT m FROM Movimiento m WHERE m.tipoTransaccion =:tipoTransaccion"),
+        @NamedQuery(name="Movimiento.findAll", query = "SELECT m FROM Movimiento m"),
+})
 public class Movimiento extends AbstractEntity {
     @Column(name = "monto")
     private BigDecimal monto;
@@ -19,11 +26,11 @@ public class Movimiento extends AbstractEntity {
     private TipoTransaccion tipoTransaccion;
 
     @ManyToOne
-    @JoinColumn(name = "cuenta_origen_id")
+    @JoinColumn(name="cuenta_origen_id", referencedColumnName = "id")
     private CuentaBancaria cuentaOrigen;
 
     @ManyToOne
-    @JoinColumn(name = "cuenta_destino_id")
+    @JoinColumn(name = "cuenta_destino_id", referencedColumnName = "id")
     private CuentaBancaria cuentaDestino;
 
     public Movimiento(){}

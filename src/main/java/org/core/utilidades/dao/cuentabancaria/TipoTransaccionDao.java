@@ -5,7 +5,6 @@ import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 import org.core.utilidades.dao.AbstractDao;
 import org.core.utilidades.entity.cuentabancaria.TipoTransaccion;
-
 import java.util.List;
 
 public class TipoTransaccionDao extends AbstractDao<TipoTransaccion> {

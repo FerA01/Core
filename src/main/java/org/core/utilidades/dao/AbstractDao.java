@@ -28,7 +28,7 @@ public class AbstractDao<T>{
     protected void afterDelete(){}
     protected void afterDelete(T entity){}
 
-    public T guardar(T entidad) throws PersistenceException {
+    public T guardar(T entidad){
         try {
             entityManager.getTransaction().begin();
             beforeCreate();
