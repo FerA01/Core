@@ -27,6 +27,8 @@ B ----> C[Deploy]
 - Assertj-core
 - Commons-codec
 - Eclipselink
+- jakarta.inject-api
+- jakarta.transaction-api
 
 ## Autor
 
@@ -41,11 +43,15 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 ### Business
 
 ### Dao
-* AbstractDao (src/main/java/org/core/utilidades/dao/AbstractDao.java)
+* AbstractDao
 * PersonaDao
 * OrganizacionDao
 * UsuarioPersonaDao
 * UsuarioOrganizacionDao
+* CuentaBancariaDao
+* MovimientoDao
+* TipoTransaccionDao
+
 ### Entity
 
 * AbstractEntity
@@ -53,11 +59,21 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 * Persona
 * UsuarioOrganizacion
 * UsuarioPersona
+* CuentaBancaria
+* Movimiento
+* TipoTransaccion
+  #### Enum
+  * TipoCuenta 
   #### Interface
   * Titular
   * Usuario
 
 ### Util
+* EnRango
+* Util
+* Encoder
+* CuentaBancariaUtil
+* NumeroFueraDeRangoException
 
 ## Test
 Se testearan las entidades involucradas tratando de obtener un alto porcentaje de cobertura (mayor a 80%).

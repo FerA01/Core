@@ -16,24 +16,31 @@ import java.util.Objects;
         @NamedQuery(name="Movimiento.findAll", query = "SELECT m FROM Movimiento m"),
 })
 public class Movimiento extends AbstractEntity {
-    @Column(name = "monto")
+    @Column(name = "monto", nullable = false)
     private BigDecimal monto;
-    @Column(name = "fecha")
+    @Column(name = "fecha", nullable = false)
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date fecha;
     @OneToOne
-    @JoinColumn(name = "tipo")
+    @JoinColumn(name = "tipo", nullable = false)
     private TipoTransaccion tipoTransaccion;
 
     @ManyToOne
-    @JoinColumn(name="cuenta_origen_id", referencedColumnName = "id")
+    @JoinColumn(name="cuenta_origen_id", referencedColumnName = "id", nullable = false)
     private CuentaBancaria cuentaOrigen;
 
     @ManyToOne
-    @JoinColumn(name = "cuenta_destino_id", referencedColumnName = "id")
+    @JoinColumn(name = "cuenta_destino_id", referencedColumnName = "id", nullable = false)
     private CuentaBancaria cuentaDestino;
 
     public Movimiento(){}
+    public Movimiento(BigDecimal monto, Date fecha, TipoTransaccion tipoTransaccion, CuentaBancaria origen, CuentaBancaria destino){
+        setMonto(monto);
+        setFecha(fecha);
+        setTipoTransaccion(tipoTransaccion);
+        setCuentaOrigen(origen);
+        setCuentaDestino(destino);
+    }
 
 
     @Override
