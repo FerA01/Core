@@ -1,14 +1,10 @@
 package org.core.utilidades.entity.cuentabancaria;
 import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.NonUniqueResultException;
-import jakarta.persistence.PersistenceException;
 import org.core.utilidades.dao.cuentabancaria.TipoTransaccionDao;
 import org.core.utilidades.dependencia.cuentabancaria.TipoTransaccionDependencia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import static org.mockito.Mockito.*;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class TipoTransaccionTest {
@@ -42,8 +38,14 @@ class TipoTransaccionTest {
         assertThrows(NullPointerException.class, ()-> daoMock.guardar(null));
     }
 
-    public void guardar(){
+    @Test
+    public void transaccionPersistidaCorrectamente(){
+        TipoTransaccionDao daoMock = mock(TipoTransaccionDao.class);
+        TipoTransaccion aPersistirMock = mock(TipoTransaccion.class);
+        aPersistirMock.setNombre("DEPOSITO");
+        when(daoMock.guardar(any(TipoTransaccion.class))).thenReturn(new TipoTransaccion());
 
+        assertNotNull(daoMock.guardar(aPersistirMock));
     }
 
     public TipoTransaccionDependencia getTtd() { return ttd; }
