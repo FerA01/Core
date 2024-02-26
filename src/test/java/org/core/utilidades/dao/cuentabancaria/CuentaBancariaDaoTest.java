@@ -1,4 +1,5 @@
 package org.core.utilidades.dao.cuentabancaria;
+import org.core.utilidades.business.CuentaBancariaBusiness;
 import org.core.utilidades.dependencia.cuentabancaria.CuentaBancariaDependencia;
 import org.core.utilidades.entity.cuentabancaria.CuentaBancaria;
 import org.core.utilidades.entity.cuentabancaria.TipoCuenta;
@@ -47,6 +48,20 @@ class CuentaBancariaDaoTest {
         BigDecimal valor = cuentaBancaria.getSaldo().add(new BigDecimal(1000));
         cuentaBancaria.setSaldo(valor);
         getDao().actualizar(cuentaBancaria);
+    }
+
+    @Test
+    public void deberiaDepositarDeCuentaOrigenACuentaDestino(){
+        CuentaBancaria origen = getDao().buscarPorId(1L);
+        CuentaBancaria destino = getDao().buscarPorId(2L);
+        BigDecimal monto = BigDecimal.valueOf(500.0000);
+        BigDecimal montoDespositado = BigDecimal.valueOf(1500.0000);
+
+        if (origen != null && destino != null){
+            CuentaBancariaBusiness.depositar(destino,origen, monto);
+            assertEquals(monto, origen.getSaldo());
+            assertEquals(montoDespositado, destino.getSaldo());
+        }
     }
 
     public CuentaBancariaDao getDao() { return dao; }

@@ -1,5 +1,7 @@
 package org.core.utilidades.util.operaciones;
 import org.core.utilidades.entity.cuentabancaria.TipoCuenta;
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,4 +43,11 @@ public class CuentaBancariaUtil {
         return descripciones;
     }
 
+    public static BigDecimal restar(BigDecimal monto, BigDecimal monto2){ return monto.subtract(monto2); }
+    public static BigDecimal sumar(BigDecimal monto, BigDecimal monto2){ return monto.add(monto2); }
+    public static BigDecimal multiplicar(BigDecimal monto, Integer valor){ return monto.multiply(BigDecimal.valueOf(valor)); }
+    public static boolean saldoMayorIgualA(BigDecimal monto1, BigDecimal monto2){
+        int resultado = monto1.compareTo(monto2);
+        return resultado >= 0;
+    }
 }

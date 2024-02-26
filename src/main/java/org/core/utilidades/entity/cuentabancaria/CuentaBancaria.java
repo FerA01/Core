@@ -15,7 +15,7 @@ import java.util.Objects;
         @NamedQuery(name = "CuentaBancaria.findByTipoCuenta", query = "SELECT cb FROM CuentaBancaria cb WHERE cb.tipoCuenta =:tipoCuenta"),
         @NamedQuery(name = "CuentaBancaria.findAll", query = "SELECT cb FROM CuentaBancaria cb"),
 })
-public class CuentaBancaria extends AbstractEntity {
+public class CuentaBancaria extends AbstractEntity implements RestriccionCuenta{
     @Column(name = "cbu")
     private String cbu;
 
@@ -39,6 +39,16 @@ public class CuentaBancaria extends AbstractEntity {
         setTipoCuenta(tipoCuenta);
         setFechaApertura(new Date());
         setSaldo(BigDecimal.valueOf(0));
+    }
+
+    @Override
+    public boolean permiteSaldoEnDescubierto() {
+        return false;
+    }
+
+    @Override
+    public BigDecimal limiteDescubierto() {
+        return BigDecimal.ZERO;
     }
 
     @Override
