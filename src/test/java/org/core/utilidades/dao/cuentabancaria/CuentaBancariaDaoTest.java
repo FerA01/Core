@@ -3,6 +3,7 @@ import org.core.utilidades.business.CuentaBancariaBusiness;
 import org.core.utilidades.dependencia.cuentabancaria.CuentaBancariaDependencia;
 import org.core.utilidades.entity.cuentabancaria.CuentaBancaria;
 import org.core.utilidades.entity.cuentabancaria.TipoCuenta;
+import org.core.utilidades.util.exception.SinSaldoDisponibleException;
 import org.core.utilidades.util.operaciones.CuentaBancariaUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,16 +52,26 @@ class CuentaBancariaDaoTest {
     }
 
     @Test
-    public void deberiaDepositarDeCuentaOrigenACuentaDestino(){
+    public void deberiaDepositarDeCuentaOrigenACuentaDestino() throws SinSaldoDisponibleException {
         CuentaBancaria origen = getDao().buscarPorId(1L);
         CuentaBancaria destino = getDao().buscarPorId(2L);
         BigDecimal monto = BigDecimal.valueOf(500.0000);
-        BigDecimal montoDespositado = BigDecimal.valueOf(1500.0000);
 
         if (origen != null && destino != null){
-            CuentaBancariaBusiness.depositar(destino,origen, monto);
-            assertEquals(monto, origen.getSaldo());
-            assertEquals(montoDespositado, destino.getSaldo());
+            CuentaBancariaBusiness.depositar(origen, destino, monto);
+            assertEquals(new BigDecimal("500.0000"), origen.getSaldo());
+            assertEquals(new BigDecimal("1500.0000"), destino.getSaldo());
+        }
+    }
+
+    @Test
+    public void deberiaFallarDepositarDeCuentaOrigenACuentaDestino() {
+        CuentaBancaria origen = getDao().buscarPorId(1L);
+        CuentaBancaria destino = getDao().buscarPorId(2L);
+        BigDecimal monto = BigDecimal.valueOf(2000.0000);
+
+        if (origen != null && destino != null){
+            assertThrows(SinSaldoDisponibleException.class, () -> CuentaBancariaBusiness.depositar(origen, destino, monto));
         }
     }
 

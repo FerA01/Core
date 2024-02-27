@@ -2,6 +2,8 @@ package org.core.utilidades.business;
 import org.core.utilidades.dao.cuentabancaria.CuentaBancariaDao;
 import org.core.utilidades.dependencia.cuentabancaria.CuentaBancariaDependencia;
 import org.core.utilidades.entity.cuentabancaria.CuentaBancaria;
+import org.core.utilidades.util.exception.SinSaldoDisponibleException;
+
 import static org.core.utilidades.util.operaciones.CuentaBancariaUtil.*;
 import java.math.BigDecimal;
 
@@ -20,7 +22,7 @@ public class CuentaBancariaBusiness {
         setDao(getDependencia().getCuentaBancariaDao());
     }
 
-    public static void depositar(CuentaBancaria origen, CuentaBancaria destino, BigDecimal monto){
+    public static void depositar(CuentaBancaria origen, CuentaBancaria destino, BigDecimal monto) throws SinSaldoDisponibleException {
         iniciarDao();
         BigDecimal verificarSaldoPositivo = restar(origen.getSaldo(), monto);
         if (saldoMayorIgualA(verificarSaldoPositivo, origen.limiteDescubierto())){
@@ -36,6 +38,7 @@ public class CuentaBancariaBusiness {
                 e.getStackTrace();
             }
         }
+        throw new SinSaldoDisponibleException(monto);
     }
     public static CuentaBancariaDependencia getDependencia() { return dependencia; }
     public static void setDependencia(CuentaBancariaDependencia dependencia) { CuentaBancariaBusiness.dependencia = dependencia; }
