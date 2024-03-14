@@ -29,7 +29,7 @@ public class CuentaBancaria extends AbstractEntity implements RestriccionCuenta{
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date fechaApertura;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, targetEntity = CuentaBancaria.class)
     @JoinColumn(name = "movimientos_id", referencedColumnName = "id")
     private List<Movimiento> movimientos;
 

@@ -13,7 +13,7 @@ class MovimientoDaoTest {
     @BeforeEach
     public void iniciarDao(){
         setMd(MovimientoDependencia.getInstance());
-        setDao(getMd().getOrganizacionDao());
+        setDao(getMd().getMovimientoDao());
     }
 
     @Test

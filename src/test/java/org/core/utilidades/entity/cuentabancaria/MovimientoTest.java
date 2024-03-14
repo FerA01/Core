@@ -19,7 +19,7 @@ class MovimientoTest {
     @Test
     private void iniciarDao(){
         setMdep(MovimientoDependencia.getInstance());
-        setMd(getMdep().getOrganizacionDao());
+        setMd(getMdep().getMovimientoDao());
     }
     @Test
     public void deberiaPersistirMovimiento(){

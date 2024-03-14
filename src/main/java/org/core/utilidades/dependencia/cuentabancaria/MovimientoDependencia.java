@@ -20,7 +20,7 @@ public class MovimientoDependencia {
     public EntityManager getEntityManager(){
         return emf.createEntityManager();
     }
-    public MovimientoDao getOrganizacionDao(){
+    public MovimientoDao getMovimientoDao(){
         return new MovimientoDao(getEntityManager());
     }
 }

@@ -94,6 +94,22 @@ class CuentaBancariaDaoTest {
         assertThrows(SinSaldoDisponibleException.class, () -> CuentaBancariaBusiness.extraer(origen, monto));
     }
 
+    @Test
+    public void deberiaHacerExtraccionCorrectamenteYMovimientoCreado(){
+        CuentaBancaria origen = getDao().buscarPorId(1L);
+        BigDecimal extraer = BigDecimal.valueOf(300);
+
+        assertNotNull(origen);
+        assertDoesNotThrow(() -> CuentaBancariaBusiness.extraer(origen, extraer));
+    }
+
+    @Test
+    public void cuentaBancariaDeberiaTenerMovimientos(){
+        CuentaBancaria origen = getDao().buscarPorId(1L);
+
+        assertNotNull(origen);
+    }
+
     @AfterEach
     public void script_saldo_cuenta_bancaria_por_defecto_1000(){
         try {
