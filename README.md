@@ -74,6 +74,7 @@ Y también habra una carpeta que tenga diferentes excepciones creadas según las
 * Encoder
 * CuentaBancariaUtil
 * NumeroFueraDeRangoException
+* SinSaldoDisponibleException
 
 ## Test
 Se testearan las entidades involucradas tratando de obtener un alto porcentaje de cobertura (mayor a 80%).

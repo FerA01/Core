@@ -20,7 +20,7 @@ public class AbstractEntity implements Serializable{
         getLogger().log(Level.FINER, "Creando entidad " + this.getClass().getName());
     }
 
-    protected Logger getLogger() { return logger; }
+    public Logger getLogger() { return logger; }
     public Long getId() { return id; }
     private void setId(Long id) { this.id = id; }
 }

@@ -10,6 +10,10 @@ import java.util.logging.Logger;
 
 public class Util{
     private static final Logger logger = Logger.getLogger(Util.class.getName());
+    public static final String BD_URL = System.getenv("MYSQL_URL");
+    public static final String BD_USERNAME = System.getenv("MYSQL_USERNAME");
+    public static final String BD_PASSWORD = System.getenv("MYSQL_PASSWORD");
+    public static final String SCRIPTS_PATH = System.getenv("PATH_TO_SCRIPTS");
 
 
     //FECHAS.

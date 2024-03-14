@@ -3,15 +3,16 @@ import org.core.utilidades.business.CuentaBancariaBusiness;
 import org.core.utilidades.dependencia.cuentabancaria.CuentaBancariaDependencia;
 import org.core.utilidades.entity.cuentabancaria.CuentaBancaria;
 import org.core.utilidades.entity.cuentabancaria.TipoCuenta;
+import org.core.utilidades.util.Util;
 import org.core.utilidades.util.exception.SinSaldoDisponibleException;
 import org.core.utilidades.util.operaciones.CuentaBancariaUtil;
+import org.core.utilidades.util.script.ScriptExecuter;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.MathContext;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
 import static org.junit.jupiter.api.Assertions.*;
 class CuentaBancariaDaoTest {
     private CuentaBancariaDao dao;
@@ -57,11 +58,21 @@ class CuentaBancariaDaoTest {
         CuentaBancaria destino = getDao().buscarPorId(2L);
         BigDecimal monto = BigDecimal.valueOf(500.0000);
 
-        if (origen != null && destino != null){
-            CuentaBancariaBusiness.depositar(origen, destino, monto);
-            assertEquals(new BigDecimal("500.0000"), origen.getSaldo());
-            assertEquals(new BigDecimal("1500.0000"), destino.getSaldo());
-        }
+        assertNotNull(origen);
+        assertNotNull(destino);
+        CuentaBancariaBusiness.depositar(origen, destino, monto);
+        assertEquals(new BigDecimal("500.0000"), origen.getSaldo());
+        assertEquals(new BigDecimal("1500.0000"), destino.getSaldo());
+    }
+    @Test
+    public void deberiaExtraerDeCuentaOrigenCorrectamente() throws SinSaldoDisponibleException {
+        script_saldo_cuenta_bancaria_por_defecto_1000();
+        CuentaBancaria origen = getDao().buscarPorId(1L);
+        BigDecimal monto = BigDecimal.valueOf(500);
+
+        assertNotNull(origen);
+        CuentaBancariaBusiness.extraer(origen, monto);
+        assertEquals(new BigDecimal("500.0000"), origen.getSaldo());
     }
 
     @Test
@@ -74,6 +85,30 @@ class CuentaBancariaDaoTest {
             assertThrows(SinSaldoDisponibleException.class, () -> CuentaBancariaBusiness.depositar(origen, destino, monto));
         }
     }
+    @Test
+    public void deberiaFallarExtraerDeCuentaOrigen() throws SinSaldoDisponibleException {
+        CuentaBancaria origen = getDao().buscarPorId(1L);
+        BigDecimal monto = BigDecimal.valueOf(23500);
+
+        assertNotNull(origen);
+        assertThrows(SinSaldoDisponibleException.class, () -> CuentaBancariaBusiness.extraer(origen, monto));
+    }
+
+    @AfterEach
+    public void script_saldo_cuenta_bancaria_por_defecto_1000(){
+        try {
+            Connection connection = DriverManager.getConnection(Util.BD_URL,
+                                                                Util.BD_USERNAME,
+                                                                Util.BD_PASSWORD);
+            String script = Util.SCRIPTS_PATH + "cuentabancaria.sql";
+            String querys = ScriptExecuter.readSQLScript(script);
+            ScriptExecuter.executeScript(connection, querys);
+            connection.close();
+        }catch (Exception e){
+            e.getStackTrace();
+        }
+    }
+
 
     public CuentaBancariaDao getDao() { return dao; }
     public void setDao(CuentaBancariaDao dao) { this.dao = dao; }

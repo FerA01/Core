@@ -1,0 +1,1 @@
+UPDATE cuenta_bancaria.cuenta_bancaria AS c SET c.saldo = 1000.000;
