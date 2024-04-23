@@ -12,6 +12,7 @@ import java.util.Objects;
         @NamedQuery(name="Movimiento.findById", query = "SELECT m FROM Movimiento m WHERE m.id =:id"),
         @NamedQuery(name="Movimiento.findByCuentaOrigen", query = "SELECT m FROM Movimiento m WHERE m.cuentaOrigen =:cuentaOrigen"),
         @NamedQuery(name="Movimiento.findByCuentaDestino", query = "SELECT m FROM Movimiento m WHERE m.cuentaDestino =:cuentaDestino"),
+        @NamedQuery(name="Movimiento.findByCuentaBancaria", query = "SELECT m FROM Movimiento m WHERE m.cuentaOrigen =:cuentaOrigen OR m.cuentaDestino =:cuentaDestino"),
         @NamedQuery(name="Movimiento.findByTipo", query = "SELECT m FROM Movimiento m WHERE m.tipoTransaccion =:tipoTransaccion"),
         @NamedQuery(name="Movimiento.findAll", query = "SELECT m FROM Movimiento m"),
 })

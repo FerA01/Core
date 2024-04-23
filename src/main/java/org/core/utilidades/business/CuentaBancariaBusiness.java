@@ -42,7 +42,7 @@ public class CuentaBancariaBusiness {
         setMovimientoDao(getMovimientoDependencia().getMovimientoDao());
     }
 
-    public static void depositar(CuentaBancaria origen, CuentaBancaria destino, BigDecimal monto) throws SinSaldoDisponibleException {
+    public static void depositar(CuentaBancaria origen, CuentaBancaria destino, BigDecimal monto) throws SinSaldoDisponibleException, NullPointerException {
         iniciarDao();
         BigDecimal verificarSaldoPositivo = restar(origen.getSaldo(), monto);
         if (saldoMayorIgualA(verificarSaldoPositivo, origen.limiteDescubierto())){
@@ -53,6 +53,14 @@ public class CuentaBancariaBusiness {
 
                 getDao().actualizar(origen);
                 getDao().actualizar(destino);
+
+                TipoTransaccion tipoTransaccion = getTipoTransaccionDao().buscarPorNombre("Depósito");
+                if (tipoTransaccion == null){
+                    throw new NullPointerException("El tipo de transacción no existe en la base");
+                }
+                Movimiento movimiento = new Movimiento(monto, Util.getFechaHoy(), tipoTransaccion, origen, destino);
+                getMovimientoDao().guardar(movimiento);
+                movimiento.getLogger().log(Level.FINE, "Movimiento creado correctamente");
                 return;
             }catch (Exception e){
                 origen.getLogger().log(Level.WARNING, e.getMessage());

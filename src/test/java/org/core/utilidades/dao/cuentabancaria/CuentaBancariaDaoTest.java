@@ -37,10 +37,6 @@ class CuentaBancariaDaoTest {
     public void deberiaObtenerMovimientosCuentaBancaria(){
         CuentaBancaria cuentaBancaria = getDao().buscarPorCbu("1111111111111111111111");
         assertNotNull(cuentaBancaria);
-        int cantidadMovimientosEsperado = 0;
-//        int cantidadMovimientosObtenidos = getDao().obtenerMovimientos(cuentaBancaria).size();
-//        assertNotNull(cantidadMovimientosObtenidos);
-//        assertEquals(cantidadMovimientosEsperado, cantidadMovimientosObtenidos);
     }
 
     @Test
@@ -53,7 +49,7 @@ class CuentaBancariaDaoTest {
     }
 
     @Test
-    public void deberiaDepositarDeCuentaOrigenACuentaDestino() throws SinSaldoDisponibleException {
+    public void deberiaDepositarDeCuentaOrigenACuentaDestino() throws SinSaldoDisponibleException, NullPointerException {
         CuentaBancaria origen = getDao().buscarPorId(1L);
         CuentaBancaria destino = getDao().buscarPorId(2L);
         BigDecimal monto = BigDecimal.valueOf(500.0000);
@@ -65,7 +61,7 @@ class CuentaBancariaDaoTest {
         assertEquals(new BigDecimal("1500.0000"), destino.getSaldo());
     }
     @Test
-    public void deberiaExtraerDeCuentaOrigenCorrectamente() throws SinSaldoDisponibleException {
+    public void deberiaExtraerDeCuentaOrigenCorrectamente() throws SinSaldoDisponibleException, NullPointerException {
         script_saldo_cuenta_bancaria_por_defecto_1000();
         CuentaBancaria origen = getDao().buscarPorId(1L);
         BigDecimal monto = BigDecimal.valueOf(500);
@@ -81,12 +77,12 @@ class CuentaBancariaDaoTest {
         CuentaBancaria destino = getDao().buscarPorId(2L);
         BigDecimal monto = BigDecimal.valueOf(2000.0000);
 
-        if (origen != null && destino != null){
-            assertThrows(SinSaldoDisponibleException.class, () -> CuentaBancariaBusiness.depositar(origen, destino, monto));
-        }
+        assertNotNull(origen);
+        assertNotNull(destino);
+        assertThrows(SinSaldoDisponibleException.class, () -> CuentaBancariaBusiness.depositar(origen, destino, monto));
     }
     @Test
-    public void deberiaFallarExtraerDeCuentaOrigen() throws SinSaldoDisponibleException {
+    public void deberiaFallarExtraerDeCuentaOrigen() {
         CuentaBancaria origen = getDao().buscarPorId(1L);
         BigDecimal monto = BigDecimal.valueOf(23500);
 
