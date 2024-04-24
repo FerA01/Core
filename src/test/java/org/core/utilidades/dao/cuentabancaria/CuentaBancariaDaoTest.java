@@ -1,15 +1,20 @@
 package org.core.utilidades.dao.cuentabancaria;
+import jakarta.persistence.EntityExistsException;
 import org.core.utilidades.business.CuentaBancariaBusiness;
 import org.core.utilidades.dependencia.cuentabancaria.CuentaBancariaDependencia;
 import org.core.utilidades.entity.cuentabancaria.CuentaBancaria;
 import org.core.utilidades.entity.cuentabancaria.TipoCuenta;
 import org.core.utilidades.util.Util;
+import org.core.utilidades.util.exception.NoExisteCuentaBancariaException;
 import org.core.utilidades.util.exception.SinSaldoDisponibleException;
 import org.core.utilidades.util.operaciones.CuentaBancariaUtil;
 import org.core.utilidades.util.script.ScriptExecuter;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -104,6 +109,27 @@ class CuentaBancariaDaoTest {
         CuentaBancaria origen = getDao().buscarPorId(1L);
 
         assertNotNull(origen);
+    }
+
+    @Test
+    public void noExisteCuentaBancariaExceptionTest(){
+        CuentaBancariaDao dao = Mockito.mock(CuentaBancariaDao.class);
+        Mockito.when(dao.buscarPorCbu(Mockito.anyString())).thenThrow(NoExisteCuentaBancariaException.class);
+
+        assertThrows(NoExisteCuentaBancariaException.class, () -> dao.buscarPorCbu("20412031084"));
+    }
+
+    @Test
+    public void verificarNoExisteCuentaBancariaExceptionTest() throws NoExisteCuentaBancariaException{
+        assertThrows(NoExisteCuentaBancariaException.class, () -> dao.buscarPorCbu("987654321"));
+    }
+
+    @Test
+    public void entityExistExceptionTest(){
+        CuentaBancaria cuentaBancaria = new CuentaBancaria("1", CuentaBancariaUtil.
+                                                                     descripcionTipoCuentaBancaria(TipoCuenta.CAJA_AHORRO)
+        );
+        assertThrows(EntityExistsException.class, () -> dao.guardar(cuentaBancaria));
     }
 
     @AfterEach

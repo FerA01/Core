@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import org.core.utilidades.dao.AbstractDao;
 import org.core.utilidades.entity.cuentabancaria.CuentaBancaria;
 import org.core.utilidades.entity.cuentabancaria.Movimiento;
+import org.core.utilidades.util.exception.NoExisteCuentaBancariaException;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -19,7 +20,16 @@ public class CuentaBancariaDao extends AbstractDao<CuentaBancaria> {
     public CuentaBancaria buscarPorCbu(String cbu){
         TypedQuery<CuentaBancaria> query = entityManager.createNamedQuery("CuentaBancaria.findByCbu", CuentaBancaria.class);
         query.setParameter("cbu", cbu);
-        return query.getSingleResult();
+        CuentaBancaria cuentaBancaria = null;
+        try {
+            cuentaBancaria = query.getSingleResult();
+        }catch (PersistenceException e){
+            logger.severe(e.getMessage());
+        }
+        if (cuentaBancaria == null){
+            throw new NoExisteCuentaBancariaException(cbu);
+        }
+        return cuentaBancaria;
     }
     public List<Movimiento> obtenerMovimientos(CuentaBancaria cuentaBancaria){
         TypedQuery<Movimiento> query = entityManager.createNamedQuery("Movimiento.findByCuentaOrigen", Movimiento.class);
@@ -28,11 +38,13 @@ public class CuentaBancariaDao extends AbstractDao<CuentaBancaria> {
     }
 
     @Override
-    protected void beforeCreate(CuentaBancaria entity){
-        try {
-            buscarPorCbu(entity.getCbu());
-            throw new EntityExistsException("Ya existe entidad CuentaBancaria con cbu: " + entity.getCbu());
-        }catch (NoResultException e){
+    protected void beforeCreate(CuentaBancaria entity) throws EntityExistsException{
+        try{
+            CuentaBancaria cuentaBancaria = buscarPorCbu(entity.getCbu());
+            if (cuentaBancaria != null){
+                throw new EntityExistsException("Ya existe entidad CuentaBancaria con cbu: " + entity.getCbu());
+            }
+        }catch (NoExisteCuentaBancariaException e){
             super.beforeCreate(entity);
         }
     }
