@@ -4,7 +4,7 @@ import static org.core.utilidades.business.CuentaBancariaBusiness.LIMITE_CAJA_AH
 
 public class CuentaCajaAhorro extends CuentaBancaria{
     @Override
-    public boolean permiteSaldoEnDescubierto() { return true; }
+    public boolean permiteSaldoEnDescubierto() { return false; }
 
     @Override
     public BigDecimal limiteDescubierto() { return LIMITE_CAJA_AHORRO; }

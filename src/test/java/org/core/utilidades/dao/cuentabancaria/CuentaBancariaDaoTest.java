@@ -66,6 +66,18 @@ class CuentaBancariaDaoTest {
         assertEquals(new BigDecimal("1500.0000"), destino.getSaldo());
     }
     @Test
+    public void deberiaDepositar2DeCuentaOrigenACuentaDestino() throws SinSaldoDisponibleException, NullPointerException {
+        CuentaBancaria origen = getDao().buscarPorId(1L);
+        CuentaBancaria destino = getDao().buscarPorId(2L);
+        BigDecimal monto = BigDecimal.valueOf(500.0000);
+
+        assertNotNull(origen);
+        assertNotNull(destino);
+        CuentaBancariaBusiness.depositar2(origen, destino, monto);
+        assertEquals(new BigDecimal("500.0000"), origen.getSaldo());
+        assertEquals(new BigDecimal("1500.0000"), destino.getSaldo());
+    }
+    @Test
     public void deberiaExtraerDeCuentaOrigenCorrectamente() throws SinSaldoDisponibleException, NullPointerException {
         script_saldo_cuenta_bancaria_por_defecto_1000();
         CuentaBancaria origen = getDao().buscarPorId(1L);

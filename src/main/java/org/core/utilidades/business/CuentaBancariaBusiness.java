@@ -1,5 +1,6 @@
 package org.core.utilidades.business;
 import jakarta.inject.Inject;
+import jakarta.persistence.NoResultException;
 import org.core.utilidades.dao.cuentabancaria.CuentaBancariaDao;
 import org.core.utilidades.dao.cuentabancaria.MovimientoDao;
 import org.core.utilidades.dao.cuentabancaria.TipoTransaccionDao;
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
 
 public class CuentaBancariaBusiness {
     public static final BigDecimal LIMITE_CUENTA_CORRIENTE = BigDecimal.valueOf(-12000L);
-    public static final BigDecimal LIMITE_CAJA_AHORRO = BigDecimal.valueOf(-5000L);
+    public static final BigDecimal LIMITE_CAJA_AHORRO = BigDecimal.ZERO;
     public static final BigDecimal LIMITE_CUENTA_SUELDO = BigDecimal.ZERO;
     public static final BigDecimal LIMITE_CUENTA_REMUNERADA = BigDecimal.ZERO;
     public static final BigDecimal LIMITE_CUENTA_MONEDA_EXTRANJERA = BigDecimal.ZERO;
@@ -60,13 +61,30 @@ public class CuentaBancariaBusiness {
                 }
                 Movimiento movimiento = new Movimiento(monto, Util.getFechaHoy(), tipoTransaccion, origen, destino);
                 getMovimientoDao().guardar(movimiento);
-                movimiento.getLogger().log(Level.FINE, "Movimiento creado correctamente");
                 return;
             }catch (Exception e){
                 origen.getLogger().log(Level.WARNING, e.getMessage());
             }
         }
         throw new SinSaldoDisponibleException(monto);
+    }
+    public static void depositar2(CuentaBancaria origen, CuentaBancaria destino, BigDecimal monto) throws SinSaldoDisponibleException {
+        BigDecimal verificarSaldoPositivo = restar(origen.getSaldo(), monto);
+        if (!saldoMayorIgualA(verificarSaldoPositivo, origen.limiteDescubierto())){
+            throw new SinSaldoDisponibleException(monto);
+        }
+        iniciarDao();
+        origen.setSaldo(verificarSaldoPositivo);
+        destino.setSaldo(sumar(destino.getSaldo(), monto));
+        getDao().actualizar(origen);
+        getDao().actualizar(destino);
+        TipoTransaccion tipoTransaccion = getTipoTransaccionDao().buscarPorNombre("Depósito");
+        if (tipoTransaccion == null){
+            throw new NoResultException();
+        }
+        Movimiento movimiento = new Movimiento(monto, Util.getFechaHoy(), tipoTransaccion, origen, destino);
+        getMovimientoDao().guardar(movimiento);
+        return;
     }
     public static void extraer(CuentaBancaria origen, BigDecimal monto) throws SinSaldoDisponibleException, NullPointerException{
         iniciarDao();
