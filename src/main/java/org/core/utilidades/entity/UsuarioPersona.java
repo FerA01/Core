@@ -11,6 +11,7 @@ import java.util.Objects;
         @NamedQuery(name = "UsuarioPersona.findAll", query = "SELECT up FROM UsuarioPersona up"),
         @NamedQuery(name = "UsuarioPersona.findByPersona", query = "SELECT up FROM UsuarioPersona up WHERE up.persona =:persona"),
         @NamedQuery(name = "UsuarioPersona.findByUsuario", query = "SELECT up FROM UsuarioPersona up WHERE up.usuario =:usuario"),
+        @NamedQuery(name = "UsuarioPersona.findByCuit", query = "SELECT up FROM UsuarioPersona up WHERE up.persona.cuit =:cuit"),
 
 }
 )
@@ -33,6 +34,12 @@ public class UsuarioPersona extends AbstractEntity {
     private Persona persona;
 
     public UsuarioPersona() {}
+    public UsuarioPersona(String usuario, String contrasena){
+        setUsuario(usuario);
+        setContrasena(contrasena);
+        setFechaAlta(Util.getFechaHoy());
+        setLogueado(false);
+    }
 
     @Override
     public boolean equals(Object o){
@@ -48,8 +55,8 @@ public class UsuarioPersona extends AbstractEntity {
     public String toString() {
         return "{ Usuario: " + getUsuario() +
                 " Fecha de alta " + Util.getFechaFormato(getFechaAlta(), "dd/MM/yyyy") +
-                " Logueado " + isLogueado() +
-                " \n Persona { " + getPersona().toString() + " }" +
+                " Logueado " + isLogueado()
+               + ((getPersona() != null) ? " \n Persona { " + getPersona().toString() + " }" : " " ) +
                 " \n }";
     }
 

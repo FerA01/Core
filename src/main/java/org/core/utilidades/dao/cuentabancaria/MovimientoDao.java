@@ -8,8 +8,16 @@ import org.core.utilidades.entity.cuentabancaria.TipoTransaccion;
 import java.util.List;
 
 public class MovimientoDao extends AbstractDao<Movimiento> {
+    private static MovimientoDao abstractDao;
     public MovimientoDao(){ super(); }
     public MovimientoDao(EntityManager em){ super(em); }
+
+    public static MovimientoDao getInstance(EntityManager em){
+        if (AbstractDao.abstractDao == null){
+            abstractDao = new MovimientoDao(em);
+        }
+        return abstractDao;
+    }
 
     public Movimiento buscarPorId(Long id) {
         return super.buscarPorId(Movimiento.class, id);

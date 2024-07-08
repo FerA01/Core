@@ -4,12 +4,21 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 import jakarta.persistence.Query;
 import org.core.utilidades.dao.AbstractDao;
+import org.core.utilidades.dao.UsuarioOrganizacionDao;
 import org.core.utilidades.entity.cuentabancaria.TipoTransaccion;
 import java.util.List;
 
 public class TipoTransaccionDao extends AbstractDao<TipoTransaccion> {
+    private static TipoTransaccionDao abstractDao;
     public TipoTransaccionDao(){ super(); }
     public TipoTransaccionDao(EntityManager em){ super(em); }
+
+    public static TipoTransaccionDao getInstance(EntityManager em){
+        if (AbstractDao.abstractDao == null){
+            abstractDao = new TipoTransaccionDao(em);
+        }
+        return abstractDao;
+    }
 
     public TipoTransaccion buscarPorId(Long id){ return super.buscarPorId(TipoTransaccion.class, id); }
     public TipoTransaccion buscarPorNombre(String nombre){

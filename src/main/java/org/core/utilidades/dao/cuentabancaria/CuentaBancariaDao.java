@@ -1,17 +1,23 @@
 package org.core.utilidades.dao.cuentabancaria;
 import jakarta.persistence.*;
 import org.core.utilidades.dao.AbstractDao;
+import org.core.utilidades.dao.UsuarioOrganizacionDao;
 import org.core.utilidades.entity.cuentabancaria.CuentaBancaria;
 import org.core.utilidades.entity.cuentabancaria.Movimiento;
 import org.core.utilidades.util.exception.NoExisteCuentaBancariaException;
-
-import java.math.BigInteger;
 import java.util.List;
 
 public class CuentaBancariaDao extends AbstractDao<CuentaBancaria> {
-
+    private static CuentaBancariaDao abstractDao;
     public CuentaBancariaDao(){ super(); }
     public CuentaBancariaDao(EntityManager em){ super(em); }
+
+    public static CuentaBancariaDao getInstance(EntityManager em){
+        if (AbstractDao.abstractDao == null){
+            abstractDao = new CuentaBancariaDao(em);
+        }
+        return abstractDao;
+    }
 
     public CuentaBancaria buscarPorId(Long id) { return super.buscarPorId(CuentaBancaria.class, id); }
 

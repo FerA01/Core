@@ -14,6 +14,7 @@ import org.core.utilidades.util.Util;
 import org.core.utilidades.util.exception.SinSaldoDisponibleException;
 import static org.core.utilidades.util.operaciones.CuentaBancariaUtil.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -107,6 +108,14 @@ public class CuentaBancariaBusiness {
             }
         }
         throw new SinSaldoDisponibleException(monto);
+    }
+
+    public static BigDecimal consultarSaldo(CuentaBancaria cuenta){
+        return cuenta.getSaldo();
+    }
+
+    public static List<Movimiento> misMovimientos(CuentaBancaria cuenta){
+        return cuenta.getMovimientos();
     }
     public static CuentaBancariaDependencia getDependencia() { return dependencia; }
     public static void setDependencia(CuentaBancariaDependencia dependencia) { CuentaBancariaBusiness.dependencia = dependencia; }

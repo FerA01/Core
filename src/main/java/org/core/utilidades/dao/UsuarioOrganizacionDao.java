@@ -8,8 +8,16 @@ import org.core.utilidades.entity.UsuarioOrganizacion;
 import org.core.utilidades.entity.UsuarioPersona;
 
 public class UsuarioOrganizacionDao extends AbstractDao<UsuarioOrganizacion> implements Usuario {
+    private static UsuarioOrganizacionDao abstractDao;
     public UsuarioOrganizacionDao(){super();}
     public UsuarioOrganizacionDao(EntityManager em){ super(em);}
+
+    public static UsuarioOrganizacionDao getInstance(EntityManager em){
+        if (AbstractDao.abstractDao == null){
+            abstractDao = new UsuarioOrganizacionDao(em);
+        }
+        return abstractDao;
+    }
 
     public UsuarioOrganizacion buscarPorId(Long id) {
         return super.buscarPorId(UsuarioOrganizacion.class, id);

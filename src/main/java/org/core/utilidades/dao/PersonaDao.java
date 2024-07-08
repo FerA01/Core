@@ -1,20 +1,26 @@
 package org.core.utilidades.dao;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Persona;
 import org.core.utilidades.entity.Titular;
 import java.util.List;
 
 public class PersonaDao extends AbstractDao<Persona> implements Titular {
+    private static PersonaDao abstractDao;
     public PersonaDao(){
         super();
     }
     public PersonaDao(EntityManager em){
         super(em);
     }
-
-
+    public static PersonaDao getInstance(EntityManager em){
+        if (AbstractDao.abstractDao == null){
+            abstractDao = new PersonaDao(em);
+        }
+        return abstractDao;
+    }
     public Persona buscarPorId(Long id) {
         return super.buscarPorId(Persona.class, id);
     }
@@ -46,10 +52,13 @@ public class PersonaDao extends AbstractDao<Persona> implements Titular {
         TypedQuery<Persona> query = entityManager.createNamedQuery("Persona.findByCuitOrDni", Persona.class);
         query.setParameter("dni", persona.getDni());
         query.setParameter("cuit", persona.getCuit());
-        Persona personaResultado = query.getSingleResult();
-        if (personaResultado != null){
-            throw new EntityExistsException("La entidad ya se encuentra creada.");
+        try {
+            Persona personaResultado = query.getSingleResult();
+            if (personaResultado != null){
+                throw new EntityExistsException("La entidad ya se encuentra creada.");
+            }
+        }catch (NoResultException|NullPointerException e){
+            super.beforeCreate(persona);
         }
-        super.beforeCreate(persona);
     }
 }

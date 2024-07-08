@@ -9,12 +9,12 @@ import java.util.logging.Logger;
 public class AbstractDao<T>{
     protected final Logger logger = Logger.getLogger(getClass().getName());
     protected EntityManager entityManager;
+    protected static AbstractDao abstractDao;
 
     protected AbstractDao(){}
     protected AbstractDao(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
-
     protected void beforeCreate(){}
     protected void beforeCreate(T entity){}
     protected void afterCreate(){}

@@ -7,10 +7,17 @@ import org.core.utilidades.entity.Titular;
 import java.util.List;
 
 public class OrganizacionDao extends AbstractDao<Organizacion> implements Titular {
-
+    private static OrganizacionDao abstractDao;
     public OrganizacionDao(){}
     public OrganizacionDao(EntityManager em){
         super(em);
+    }
+
+    public static OrganizacionDao getInstance(EntityManager em){
+        if (AbstractDao.abstractDao == null){
+            abstractDao = new OrganizacionDao(em);
+        }
+        return abstractDao;
     }
 
     @Override

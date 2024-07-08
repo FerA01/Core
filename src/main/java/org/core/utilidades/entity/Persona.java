@@ -31,6 +31,13 @@ public class Persona extends AbstractEntity {
     private Long cuit;
 
     public Persona(){}
+    public Persona(String nombre, String apellido, Long dni, Long cuit, Date fechaNacimiento){
+        setNombre(nombre);
+        setApellido(apellido);
+        setDni(dni);
+        setCuit(cuit);
+        setFechaNacimiento(fechaNacimiento);
+    }
 
     @Override
     public boolean equals(Object o){
@@ -46,6 +53,15 @@ public class Persona extends AbstractEntity {
         return "Nombre y Apellido: " +  getNombre() + " " + getApellido() + ", DNI: " + getDni() + ", Fecha de nacimiento: " + Util.getFechaFormato(getFechaNacimiento(), "dd/MM/yyyy") + ", Cuit: " + getCuit();
     }
 
+    @Override
+    public Long getId(){
+        return super.getId();
+    }
+
+    @Override
+    public void setId(Long id){
+        super.setId(id);
+    }
     public String getNombre() {
         return nombre;
     }

@@ -2,6 +2,7 @@ package org.core.utilidades.dao;
 
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Persona;
 import org.core.utilidades.entity.Usuario;
@@ -10,9 +11,16 @@ import org.core.utilidades.entity.UsuarioPersona;
 import java.util.List;
 
 public class UsuarioPersonaDao extends AbstractDao<UsuarioPersona> implements Usuario {
+    private static UsuarioPersonaDao abstractDao;
     public UsuarioPersonaDao(){ super(); }
     public UsuarioPersonaDao(EntityManager em){ super(em); }
 
+    public static UsuarioPersonaDao getInstance(EntityManager em){
+        if (AbstractDao.abstractDao == null){
+            abstractDao = new UsuarioPersonaDao(em);
+        }
+        return abstractDao;
+    }
     public UsuarioPersona buscarPorId(Long id){
         return super.buscarPorId(UsuarioPersona.class, id);
     }
@@ -29,12 +37,21 @@ public class UsuarioPersonaDao extends AbstractDao<UsuarioPersona> implements Us
         query.setParameter("usuario", usuario);
         return query.getSingleResult();
     }
+    public UsuarioPersona buscarPorCuit(Long cuit){
+        TypedQuery<UsuarioPersona> query = entityManager.createNamedQuery("UsuarioPersona.findByCuit", UsuarioPersona.class);
+        query.setParameter("cuit", cuit);
+        return query.getSingleResult();
+    }
 
     @Override
     protected void beforeCreate(UsuarioPersona entity) {
-        UsuarioPersona usuario = buscarPorPersona(entity.getPersona());
-        if (usuario != null){
-            throw new EntityExistsException("Entidad ya creada");
+        try{
+            UsuarioPersona usuario = buscarPorPersona(entity.getPersona());
+            if (usuario != null){
+                throw new EntityExistsException("Ya existe el usuario.");
+            }
+        }catch (NoResultException|NullPointerException e){
+            super.beforeCreate(entity);
         }
     }
 }

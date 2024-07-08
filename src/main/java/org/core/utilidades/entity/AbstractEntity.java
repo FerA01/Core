@@ -12,7 +12,7 @@ public class AbstractEntity implements Serializable{
 //    EntityManager entityManager;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected Long id;
 
@@ -22,5 +22,5 @@ public class AbstractEntity implements Serializable{
 
     public Logger getLogger() { return logger; }
     public Long getId() { return id; }
-    private void setId(Long id) { this.id = id; }
+    public void setId(Long id) { this.id = id; }
 }
