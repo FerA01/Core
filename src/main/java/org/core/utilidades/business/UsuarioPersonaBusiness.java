@@ -22,7 +22,6 @@ public class UsuarioPersonaBusiness {
             Persona persona1 = personaDao.guardar(persona);
             usuario.setPersona(persona1);
             usuarioPersonaDao.guardar(usuario);
-
         }catch (EntityExistsException | NullPointerException | NoResultException e){
             logger.log(Level.WARNING, e.getMessage());
         }

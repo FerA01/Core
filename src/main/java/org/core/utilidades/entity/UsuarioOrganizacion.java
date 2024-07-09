@@ -31,6 +31,14 @@ public class UsuarioOrganizacion extends AbstractEntity {
     @JoinColumn(name = "organizacion_id", unique = true)
     private Organizacion organizacion;
 
+
+    public UsuarioOrganizacion() {}
+    public UsuarioOrganizacion(String usuario, String contrasena){
+        setUsuario(usuario);
+        setContrasena(contrasena);
+        setFechaAlta(Util.getFechaHoy());
+        setLogueado(false);
+    }
     @Override
     public boolean equals(Object o){
         if (this == o) return true;
@@ -40,8 +48,6 @@ public class UsuarioOrganizacion extends AbstractEntity {
 
         return Objects.equals(this.getId(), otro.getId());
     }
-
-    public UsuarioOrganizacion() {}
 
 
     @Override

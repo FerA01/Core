@@ -20,6 +20,11 @@ public class Organizacion extends AbstractEntity {
     private Long cuit;
 
     public Organizacion(){}
+    public Organizacion(String razonSocial, Long cuit, Date fechaCreacion){
+        setRazonSocial(razonSocial);
+        setCuit(cuit);
+        setFechaCreacion(fechaCreacion);
+    }
 
     @Override
     public boolean equals(Object o){

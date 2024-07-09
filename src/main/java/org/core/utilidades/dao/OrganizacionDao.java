@@ -1,6 +1,7 @@
 package org.core.utilidades.dao;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Organizacion;
 import org.core.utilidades.entity.Titular;
@@ -22,11 +23,14 @@ public class OrganizacionDao extends AbstractDao<Organizacion> implements Titula
 
     @Override
     protected void beforeCreate(Organizacion entity) {
-        Organizacion organizacion = obtenerTitularCuit(entity.getCuit());
-        if (organizacion != null){
-            throw new EntityExistsException("Entidad ya creada");
+        try {
+            Organizacion organizacion = obtenerTitularCuit(entity.getCuit());
+            if (organizacion != null){
+                throw new EntityExistsException("La entidad ya se encuentra creada.");
+            }
+        }catch (NoResultException|NullPointerException e){
+            super.beforeCreate(entity);
         }
-        super.beforeCreate(entity);
     }
 
     @Override

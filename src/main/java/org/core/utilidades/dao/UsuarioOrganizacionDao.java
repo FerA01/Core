@@ -1,6 +1,7 @@
 package org.core.utilidades.dao;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.core.utilidades.entity.Organizacion;
 import org.core.utilidades.entity.Usuario;
@@ -42,10 +43,14 @@ public class UsuarioOrganizacionDao extends AbstractDao<UsuarioOrganizacion> imp
 
     @Override
     protected void beforeCreate(UsuarioOrganizacion entity) {
-        UsuarioOrganizacion usuario = obtenerPorOrganizacion(entity.getOrganizacion());
-        if (usuario != null){
-            throw new EntityExistsException("Entidad ya creada");
+        try {
+            UsuarioOrganizacion usuario = obtenerPorOrganizacion(entity.getOrganizacion());
+            if (usuario != null){
+                throw new EntityExistsException("La entidad ya se encuentra creada.");
+            }
+            super.beforeCreate(entity);
+        }catch (NoResultException | NullPointerException e){
+            super.beforeCreate(entity);
         }
-        super.beforeCreate(entity);
     }
 }
